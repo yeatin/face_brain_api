@@ -1,8 +1,27 @@
 const handleSignIn = (req, res, db, bcrypt) => {
     const { email, password } = req.body;
-    if ( !email || !password) {
+    if (!email || !password) {
         return res.status(400).json('blank')
     }
+    db
+        .from('login')
+        .select()
+        .eq('email', email)
+        .then(data => {
+            const isValid = bcrypt.compareSync(password, data.data[0].hash);
+            if (isValid) {
+                return db.from('users')
+                    .select()
+                    .eq('email', email)
+                    .then(user => { res.json(user.data[0]) })
+                    .catch(err => res.status(400).json('Failed singin'))
+            } else {
+                res.status(400).json('Wrong credentials');
+            }
+        })
+        .catch(err => res.status(400).json('Wrong credentials'));
+    //old way of tackling db
+    /*
     db.select('email', 'hash').from('login')
         .where('email', email)
         .then(data => {
@@ -16,6 +35,7 @@ const handleSignIn = (req, res, db, bcrypt) => {
             }
         })
         .catch(err => res.status(400).json('Wrong credentials'));
+    */
 }
 
 module.exports = { handleSignIn: handleSignIn };

@@ -1,12 +1,15 @@
 const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
-const knex = require('knex');
+//const knex = require('knex');
+const { createClient } = require('@supabase/supabase-js');
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
-
+/*
+//after the database was moved to supabase, knex is no longer needed
+//and the db interface is now supabase's api system
 const db = knex({
     client: 'pg',
     connection: {
@@ -16,10 +19,14 @@ const db = knex({
           }
     }
 });
+*/
+
+//supabase api
+const db = createClient(process.env.DATABASE_URL, process.env.DATABASE_KEY);
 
 const app = express();
 app.use(express.json());
-app.use(cors({origin: "http://yeatin.github.io/"}));
+app.use(cors());
 
 app.get('/', (req, res) => res.send('it is working now'));
 app.post('/signin', (req, res) => signin.handleSignIn(req, res, db, bcrypt));
@@ -29,4 +36,4 @@ app.put('/image', (req, res) => image.handleImage(req, res, db));
 app.post('/imageurl', (req, res) => image.handleApiCall(req, res));
 
 
-app.listen(process.env.PORT || 3000, () => console.log(`app is running on ${process.env.PORT}`));
+app.listen(process.env.PORT || 5000, () => console.log(`app is running on ${process.env.PORT || 5000}`));

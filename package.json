@@ -13,6 +13,7 @@
     "nodecom": "^1.0.1"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.21.0",
     "bcrypt-nodejs": "0.0.3",
     "clarifai": "^2.9.1",
     "cors": "^2.8.5",
