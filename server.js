@@ -19,7 +19,7 @@ const db = knex({
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: "http://yeatin.github.io/"}));
 
 app.get('/', (req, res) => res.send('it is working now'));
 app.post('/signin', (req, res) => signin.handleSignIn(req, res, db, bcrypt));
