@@ -28,7 +28,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => res.send('it is working now'));
+app.get('/', (req, res) => res.status(200).send('it is working now'));
 app.post('/signin', (req, res) => signin.handleSignIn(req, res, db, bcrypt));
 app.post('/register', (req, res) => register.handleRegister(req, res, db, bcrypt));
 app.get('/profile/:id', (req, res) => profile.handleProfile((req, res, db)));
