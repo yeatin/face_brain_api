@@ -1,2 +1,9 @@
-This package is files for doployment.
-To serve it on web, check on heroku doploy.
+# Face Brain API
+The backend server of Face Brain web app
+## Built With
+* Node.js
+* Express.js
+* Clarifai API
+## Hosted On
+* Database -> supabase.com
+* Backend -> render.com
