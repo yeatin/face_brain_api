@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(cors());
 
 //scheduled call to DB to remain active
-const job = new CronJob("*/6 * *", () => {
+const job = new CronJob("0 0 0 */6 * *", () => {
     db
     .from('login')
     .select()
