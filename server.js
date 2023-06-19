@@ -36,6 +36,9 @@ const job = new CronJob("0 0 0 */6 * *", () => {
     .from('login')
     .select()
 }, null, true, "Asia/Taipei")
+const job2 = new CronJob("*/3 0 0 * * *", () => {
+    console.log(new Date());
+}, null, true, "Asia/Taipei")
 
 app.get('/', (req, res) => res.status(200).send('it is working now'));
 app.post('/signin', (req, res) => signin.handleSignIn(req, res, db, bcrypt));
