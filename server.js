@@ -31,17 +31,17 @@ app.use(express.json());
 app.use(cors());
 
 //scheduled call to DB to remain active
-const job = new CronJob("0 0 */6 * 0", () => {
+const job = new CronJob("0 0 0 */2 * *", () => {
     db
     .from('login')
     .select()
-    console.log("5 params", new Date());
+    console.log("job1", new Date());
 }, null, true, "Asia/Taipei")
-const job2 = new CronJob("0 0 0 */6 * 0", () => {
+const job2 = new CronJob("0 0 0 * * */2", () => {
     db
     .from('login')
     .select()
-    console.log("6 params", new Date());
+    console.log("job2", new Date());
 }, null, true, "Asia/Taipei")
 
 app.get('/', (req, res) => res.status(200).send('it is working now'));
