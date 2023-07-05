@@ -32,17 +32,11 @@ app.use(express.json());
 app.use(cors());
 
 //scheduled call to DB to remain active
-const job = new CronJob("0 0 0 */2 * *", () => {
+const job = new CronJob("0 0 0 * * Mon,Thu", () => {
     db
     .from('login')
     .select()
     console.log("job1", new Date());
-}, null, true, "Asia/Taipei")
-const job2 = new CronJob("0 0 0 * * */2", () => {
-    db
-    .from('login')
-    .select()
-    console.log("job2", new Date());
 }, null, true, "Asia/Taipei")
 
 app.get('/', (req, res) => res.status(200).send('it is working now'));
