@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 //const knex = require('knex');
-const CronJob = require('cron').CronJob;
+const cron = require('node-cron');
 const { createClient } = require('@supabase/supabase-js');
 
 const register = require('./controllers/register');
@@ -32,18 +32,12 @@ app.use(express.json());
 app.use(cors());
 
 //scheduled call to DB to remain active
-const job = new CronJob("0 0 0 * * Mon,Thu", () => {
+cron.schedule("0 0 0 * * Mon,Sun", () => {
     db
     .from('login')
     .select()
-    console.log("job1", new Date());
-}, null, true, "Asia/Taipei")
-const job2 = new CronJob("* * * * * Mon,Sat", () => {
-    db
-    .from('login')
-    .select()
-    console.log("job1", new Date());
-}, null, true, "Asia/Taipei")
+    console.log("Doing cron", new Date());
+}, {timezone: "Asia/Taipei"})
 
 app.get('/', (req, res) => res.status(200).send('it is working now'));
 app.post('/signin', (req, res) => signin.handleSignIn(req, res, db, bcrypt));
