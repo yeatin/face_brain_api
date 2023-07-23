@@ -32,10 +32,12 @@ app.use(express.json());
 app.use(cors());
 
 //scheduled call to DB to remain active
-cron.schedule("0 0 0 * * Mon,Sun", () => {
+cron.schedule("* * * * * Mon,Sun", () => {
     db
     .from('login')
     .select()
+    // .then(user => console.log("Doing cron", new Date()))
+    // .catch(err => res.status(400).json('Cron not working'))
     console.log("Doing cron", new Date());
 }, {timezone: "Asia/Taipei"})
 
