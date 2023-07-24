@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(cors());
 
 //scheduled call to DB to remain active
-cron.schedule("* * * * * Monday,Tuesday,Thursday", () => {
+cron.schedule("25 22 * * Monday,Tuesday,Thursday", () => {
     db
     .from('login')
     .select()
