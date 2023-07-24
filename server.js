@@ -32,13 +32,13 @@ app.use(express.json());
 app.use(cors());
 
 //scheduled call to DB to remain active
-cron.schedule("* * * * * Mon,Sun", () => {
+cron.schedule("* * * * * Monday,Tuesday,Thursday", () => {
     db
     .from('login')
     .select()
-    // .then(user => console.log("Doing cron", new Date()))
-    // .catch(err => res.status(400).json('Cron not working'))
-    console.log("Doing cron", new Date());
+    .then(user => console.log("Doing cron", new Date()))
+    .catch(err => res.status(400).json('Cron not working'))
+    // console.log("Doing cron", new Date());
 }, {timezone: "Asia/Taipei"})
 
 app.get('/', (req, res) => res.status(200).send('it is working now'));
